@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <ul id="todoList"></ul>
+
+    <script>
+      // implement event source with url http://localhost:3000/notifications
+      const eventSource = new EventSource(
+        'http://localhost:3000/notifications',
+      );
+
+      const todoList = document.getElementById('todoList');
+
+      eventSource.onmessage = (event) => {
+        // parse the data and add it to the todo list
+        console.log('ini dari on message', event.data);
+        const data = JSON.parse(event.data);
+        const newTodo = document.createElement('li');
+        newTodo.textContent = data.message;
+        todoList.appendChild(newTodo);
+      };
+
+      eventSource.addEventListener('testing_event', (event) => {
+        // parse the data and add it to the todo list
+
+        console.log('ini dari notif', event.data);
+        // const data = JSON.parse(event.data);
+        // const newTodo = document.createElement('li');
+        // newTodo.textContent = data.message;
+        // todoList.appendChild(newTodo);
+      });
+
+      eventSource.addEventListener('order_created', (event) => {
+        // parse the data and add it to the todo list
+
+        console.log('ini dari order_created', event.data);
+        // const data = JSON.parse(event.data);
+        // const newTodo = document.createElement('li');
+        // newTodo.textContent = data.message;
+        // todoList.appendChild(newTodo);
+      });
+    </script>
+  </body>
+</html>
